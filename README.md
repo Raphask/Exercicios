@@ -1,0 +1,1 @@
+Olá, esse projeto são vários exercícios para mostrar a evolução na linguagem Java
