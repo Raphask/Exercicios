@@ -1,13 +1,16 @@
 package mercado;
 
 import java.util.ArrayList;
-
+import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Caixa {
+@SuppressWarnings("unused")
 public static void main(String[] args) {
 	
-    
+   
 	ArrayList<String> nomeFiscal= new ArrayList<>();
 	ArrayList<Double> valorFiscal= new ArrayList<>();
 	ArrayList<Double> totalFiscal= new ArrayList<>();
@@ -28,28 +31,46 @@ public static void main(String[] args) {
 			System.out.println("Quer a nota?");
 			codigo = entrada.next();
 			
-	   if (codigo.equalsIgnoreCase("Sim")) {
-				System.out.println("Descrição            UN              Vl Total");
-	   for (int i = 0; i < reg1.registro.size();) {
-			
-		   System.out.printf("%s---------------%.1f-----------------%.2f", 
-				   nomeFiscal.get(i),valorFiscal.get(i), totalFiscal.get(i));
-			
-	   break;
-			}
-	   break;
-			
+			if (codigo.equalsIgnoreCase("Sim")) {
+			    System.out.println("Descrição            UN              Vl Total");
+			    int i = 0;
+			    for (String nome : nomeFiscal) {
+			        System.out.printf("%-20s%.1f%20.2f\n",
+			                nome,
+			                valorFiscal.get(i),
+			                totalFiscal.get(i));
+			        i++;
+			    }
+			    break;
 			}
 	   break;
             }
 	    
-        System.out.println(reg1.registro.get(codigo).nome);
-	    System.out.println(reg1.registro.get(codigo).preco);
-	    nomeFiscal.add(reg1.registro.get(codigo).nome);
-	    
+     
+		try {
+			System.out.println(reg1.registro.get(codigo).nome);
+			System.out.println(reg1.registro.get(codigo).preco);
+			 nomeFiscal.add(reg1.registro.get(codigo).nome);
+			valorTotal = reg1.registro.get(codigo).preco * valor;
+		} catch (NullPointerException e) {
+		System.out.println("Código incorreto, reinicie por favor");
+		break;
+		} catch (Exception e) {
+		 System.out.println("Quantidade incorreta, reinicie por favor");
+	    } 
+	   
+		
+	   
+	  
 	    System.out.println("Digite a quantidade");
-	    valor =  entrada.nextInt();
-	    valorFiscal.add(valor);
+	     try {
+			valor =  entrada.nextInt();
+		} catch (InputMismatchException e) {
+			// TODO Auto-generated catch block
+		System.out.println("Dígito inválido");
+		break;
+		}
+		 valorFiscal.add(valor);
 	   
 	    
 	    String simbolo = entrada.next();
@@ -59,6 +80,8 @@ public static void main(String[] args) {
 	    totalFiscal.add(valorTotal);
         total += valorTotal; 
         System.out.printf("%.2f \n", total);
-	    }
+	              
+    
+    }
 }
 }
